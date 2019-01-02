@@ -68,5 +68,18 @@ export class GoogleLoginProvider extends BaseLoginProvider {
       });
     });
   }
+  revokeAccess(userid:string): Promise<any>{
+    var _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.auth2.disconnect().then(function (err) {
+          if (err) {
+              reject(err);
+          }
+          else {
+              resolve('Google account Unlink success');
+          }
+      });
+  });
+  }
 
 }

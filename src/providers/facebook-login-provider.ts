@@ -69,5 +69,11 @@ export class FacebookLoginProvider extends BaseLoginProvider {
       });
     });
   }
-
+  revokeAccess(userid:string): Promise<any>{
+    return new Promise(function (resolve, reject) {
+      FB.api(`/${userid}/permissions`,'DELETE',{},function (response) {
+          resolve('Account Unlink success');
+      });
+  });
+  }
 }

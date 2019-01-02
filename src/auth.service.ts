@@ -82,5 +82,23 @@ export class AuthService {
       }
     });
   }
-
+  revokeAccess(userid:string): Promise<any> {
+    var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (_this._user && _this._user.provider) {
+                let /** @type {?} */ providerId = _this._user.provider;
+                let /** @type {?} */ providerObject = _this.providers.get(providerId);
+                providerObject.revokeAccess(userid).then(function (revokeres) {
+                    _this._user = null;
+                    _this._authState.next(null);
+                    resolve(revokeres);
+                }).catch(function (err) {
+                    _this._authState.next(null);
+                });
+            }
+            else {
+                reject(AuthService.LOGIN_PROVIDER_NOT_FOUND);
+            }
+        });
+  }
 }

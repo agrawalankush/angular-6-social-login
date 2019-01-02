@@ -4,5 +4,6 @@ export interface LoginProvider {
   initialize(): Promise<SocialUser>;
   signIn(): Promise<SocialUser>;
   signOut(): Promise<any>;
+  revokeAccess(userid:string):Promise<any>;
 }
 
