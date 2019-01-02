@@ -118,9 +118,41 @@ export class SigninComponent implements OnInit {
   
 }
 ```
+In `the profile component,the page After login you give your user the access profile.component.ts`,
+```javascript
+public unlinkaccount(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform === "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+      this.socialAuthService.revokeAccess(this.userid).then(
+        (revokeres) => {
+                console.log(revokeres);
+                //the url to redirect after revocation
+                this.router.navigate(['/login',{unlinkmessage:'You have successfully unlinked your account'}]);
+        }
+        );
+    }else if(socialPlatform === "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+      this.socialAuthService.revokeAccess(this.userid).then(
+        (revokeres) => {
+                console.log(revokeres);
+                //the url to redirect after revocation
+                this.router.navigate(['/login',{unlinkmessage:revokeres}]);
+        }
+        );
+    }
+  }
+```
+In `profile.component.html`
+```html
+<h1>
+Unlink {{provider}} Account
+</h1>
 
-
-
+ <button (click)="unlinkaccount(provider)" *ngIf="provider" color="warn">Unlink {{provider}} account</button>
+ 
+```
 In `signin.component.html`,
 
 ```html
